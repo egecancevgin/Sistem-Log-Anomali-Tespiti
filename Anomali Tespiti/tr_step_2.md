@@ -100,7 +100,8 @@ $ curl -X POST "localhost:9200/_bulk" -H 'Content-Type: application/json' --data
 ```
 
 Eğer bir hata mesajı vermediyse bunu test etmek için 9200 port'una gidelim, ve link kısmına index anahtarını yazalım, örnek:
-'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com' linkine 'anomaliler' index'ini ekleyelim.
+'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com' linkine 'anomaliler' index'ini ekleyelim:
+
 'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com/anomaliler'
 
 
