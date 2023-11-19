@@ -99,7 +99,7 @@ Verinin etiketlenmesi genellikle insan eliyle gerçekleştirilir ve log projeler
 
 Temel denetimsiz makine öğrenimi algoritmaları K-Means, DBSCAN, Hiyerarşik Kümeleme, Isolation Forest, Gaussian Mixture Models olarak örneklendirilebilir. Biz bu modelde K-Means kullanacağız ancak optimizasyon aşamasında diğer modeller de denenebilir.
 
-K-Means temelde ona verilen 'k' değeri kadar merkez oluşturulur. Örneğin 10 tane merkez oluşturup, verilerin birbirliğine benzerliğine göre gruplandırır. Her iterasyonda bu verileri doğru merkezlere yerleştirmeye çalışır. Sanki 10 farklı renk grubuna sahip bilyeleri 10 farklı keseye renklerine göre ayırarak doldurmak gibidir. Bu şekilde öğrenir ve sonrasında bunun değerlendirmesini de alışılagelmiş RMSE gibi metriklerle yapamayız, Inertia ve Silhouette Skor değerlerine bakarak yapacağız.
+K-Means temelde ona verilen 'k' değeri kadar merkez oluşturulur. Örneğin 10 tane merkez oluşturup, verilerin birbirliğine benzerliğine göre gruplandırır. Her iterasyonda bu verileri doğru merkezlere yerleştirmeye çalışır. Sanki 10 farklı renk grubuna sahip bilyeleri 10 farklı keseye renklerine göre ayırarak doldurmak gibidir. Bu şekilde öğrenir ve sonrasında bunun değerlendirmesini de alışılagelmiş precision, recall gibi metriklerle yapamayız, Inertia ve Silhouette Skor değerlerine bakarak yapacağız.
 
 Modeli oluşturup bu fonksiyonu anomali.py dosyamıza ekleyelim:
 ``` python
@@ -172,6 +172,59 @@ def optimizasyon(model, veri):
     print("En iyi parametreler:", grid_search.best_params_)
     return grid_search.best_estimator_
 ```
+
+Makinenin anomali olarak karar verdiği veri noktalarını True/False şeklinde eklenmiş halleri ile anomaliler.csv çıktı dosyasına ekleme fonksiyonunu da oluşturalım ve anomali.py dosyasına ekleyelim:
+``` python
+def cikti(anomaliler):
+    '''
+    Anomalileri bir cikti dosyasina yazar
+    param anomaliler: anomaliler
+    '''
+    dosya_ismi = 'anomaliler.csv'
+    anomaliler.to_csv(dosya_ismi, index=False)
+    return dosya_ismi
+```
+
+Son olarak sürücü fonksiyonumuzu oluşturup dosyamıza ekleyelim:
+``` python
+def main():
+    '''
+    Sürücü fonksiyon
+    '''
+    veri = veri_okuma('Linux_2k.log_structured.csv')
+    islenmis_veri = ozellik_muhendisligi(veri)
+    egitilmis_model, anomaliler = model_egitimi(islenmis_veri)
+    cikti(anomaliler)
+    degerlendirme(egitilmis_model, islenmis_veri)
+    en_iyi_model = optimizasyon(egitilmis_model, islenmis_veri)
+    degerlendirme(en_iyi_model, islenmis_veri)
+```
+
+Tüm fonksiyonlar hazır, dosyanın sonunda sürücü fonksiyonumuzu çağıralım:
+``` python
+main()
+```
+
+Şimdi anomali.py dosyamız hazır, sırada terminalde yapacağımız bazı işlemler var, sırasıyla tek tek yapalım:
+``` .sh
+$ apt-get update
+$ apt-get install python3-pip
+$ pip install pandas
+$ pip install numpy
+$ pip install scikit-learn
+$ pip install gensim
+```
+
+Gerekli dosyalar indirilmiş olmalı, şimdi son olarak dosyamızı çalıştırmak kaldı, /root/workspace dizininde olduğumuzdan emin olalım ve şunu terminale yazalım:
+``` .sh
+$ python3 anomali.py
+```
+
+Şimdi anomaliler.csv diye bir dosya oluşmuş olmalı, eğer bu oluşmuşsa ve maksimum 100 tane kayıt içeriyorsa işlem tamam diyebiliriz, sonraki aşamaya geçebiliriz.
+``` .sh
+ls -l
+```
+
 
 
 
