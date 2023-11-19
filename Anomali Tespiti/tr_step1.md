@@ -1,1 +1,1 @@
-
+## Birinci Adım: Makine Öğrenimi
