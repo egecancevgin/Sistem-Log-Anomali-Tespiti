@@ -107,15 +107,33 @@ Eğer bir hata mesajı vermediyse bunu test etmek için 9200 port'una gidelim, v
 Şimdi '5601' portuna girelim ve çıkan ekranda 'Add data' varsa ona basalım. 
 ![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_0.png)
 
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_1.png)
+
 Solda bulunan üç çizgili menü'ye basalım ve çıkan yerden Stack Management'a basalım.
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_2.png)
 
 - Stack Management bölümünde 'Index Patterns' kısmı var, buna girelim ve çıkan ekranda 'Create index pattern' tuşuna basalım, ve buraya anomaliler yazıp devam edelim.
 
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_3.png)
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_4.png)
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_5.png)
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_6.png)
+
 Burada sıkıntı yoksa yine üç çizgili sol menüden bu sefer Kibana başlığı altındaki Machine Learning kısmına tıklayalım.
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_7.png)
 
 Bizi otomatik olarak attığı 'Data Visualizer' sayfasındaki 'Select an index pattern' başlığındaki 'Select index' butonuna basalım.
 
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_8.png)
+
 Zaten burada 'anomaliler' index'i bulunuyor olmalı, bu index'e basalım.
+
+![elo_0](https://github.com/egecancevgin/TTelekom-Bulut-Bilisim-Projesi/blob/49e2dc586a26aa34ab34a4392315a2b84575e2a5/elastic_9.png)
 
 İşte bu kadar, tüm analizleri yapabiliriz, dashboard'a girmiş olduk.
 
