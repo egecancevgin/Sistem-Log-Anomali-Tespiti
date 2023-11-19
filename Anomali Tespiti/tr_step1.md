@@ -88,6 +88,51 @@ def ozellik_muhendisligi(veri):
     return veri
 ```
 
+Word2Vec algoritması, 'Continuous Bag of Words' ve 'Skip-gram' modellerini içerir. CBoW modeli, bir kelimenin bağlam içindeki anlamını öğrenmek için tasarlanmıştır. Bir kelimenin bağlam içindeki olasılığı maksimize etmeye çalışır ve hedef kelimenin çevresindeki kelimelerden yola çıkarak, bu kelimenin orada olma olasılığını tahmin eder.
+Ör: 'Ayıkla pirincin taşını' cümlesinde 'ayıkla' ve 'taşını' kelimelerinin arasında 'pirincin' olma olasılığı üzerinde çalışır.
 
+Skip-gram da tam tersi olarak, hedef kelime kullanılarak çevresindeki kelimeleri tahmin etmeye çalışır. Kısaca bu iki modeli kullanarak öğretiyoruz.
 
+Şimdi de modeli eğitelim, makine öğrenimi de öğrenme yolu bakımından 3'e ayrılabilir: Denetimli, Denetimsiz ve Pekiştirmeli öğrenim. Denetimli öğrenimde etiket sütunu bulunur. Bu etiket sütunu örnek olarak bir satırda bulunan verinin anomali olduğunu söyler, veya olmadığını. Makineye bunu veririz ve makine bunu öğrenir. Sonraki aşamada tahmin etmesi gerektiğinde bu öğrendiği neyin anomali neyin değil olduğu temsiline göre tahmin eder. 
 
+Verinin etiketlenmesi genellikle insan eliyle gerçekleştirilir ve log projeleri özelinde etiketli veriye ulaşmak çok karşılaşan bir durum değildir. Elimizdeki veri de etiketsiz olduğu için biz de bu durumda denetimsiz makine öğrenimi yapmak durumundayız.
+
+Temel denetimsiz makine öğrenimi algoritmaları K-Means, DBSCAN, Hiyerarşik Kümeleme, Isolation Forest, Gaussian Mixture Models olarak örneklendirilebilir. Biz bu modelde K-Means kullanacağız ancak optimizasyon aşamasında diğer modeller de denenebilir.
+
+K-Means temelde ona verilen 'k' değeri kadar merkez oluşturulur. Örneğin 10 tane merkez oluşturup, verilerin birbirliğine benzerliğine göre gruplandırır. Her iterasyonda bu verileri doğru merkezlere yerleştirmeye çalışır. Sanki 10 farklı renk grubuna sahip bilyeleri 10 farklı keseye renklerine göre ayırarak doldurmak gibidir. Bu şekilde öğrenir ve sonrasında bunun değerlendirmesini de alışılagelmiş RMSE gibi metriklerle yapamayız, Inertia ve Silhouette Skor değerlerine bakarak yapacağız.
+
+Modeli oluşturup bu fonksiyonu anomali.py dosyamıza ekleyelim:
+``` python
+def model_egitimi(veri):
+    '''
+    Islenmis veriyi makine ogrenimine sokar
+    :param veri: DataFrame turundeki islenmis veri seti
+    :return: Egitilmis model
+    '''
+    # K-Means algoritmasi ile 10 centroid ile baslayan bir kumeleme yapalim
+    kmeans = KMeans(n_clusters=10, random_state=42)
+    veri['Cluster'] = kmeans.fit_predict(list(veri['Content_Vector']))
+
+    # Bunu optimizasyon asamasinda deneyebiliriz, simdilik yorum satiri olarak kalsin
+    # data['Cluster'] = kmeans.fit_predict(data[['Content_Vector','Component_Frequency_Encoded']])
+
+    # Her veriyi en yakın kume merkezine olan uzakligina gore siralayalim
+    cluster_merkezleri = kmeans.cluster_centers_
+    veri['Distance_to_Center'] = veri.apply(
+        lambda row: np.linalg.norm(row['Content_Vector']-cluster_merkezleri[row['Cluster']]),
+        axis=1
+    )
+
+    # Esik degerini belirleyelim ve esik degeri asan verileri outlier olarak isaretleyelim
+    esik_deger = veri['Distance_to_Center'].quantile(0.95)
+    veri['Outlier'] = veri['Distance_to_Center'] > esik_deger
+
+    # Incelemek icin Outlier sutununa bakabiliriz (opsiyonel)
+    print(veri.loc[veri['Outlier'] == True].info())
+    anomali_df = veri.loc[veri['Outlier'] == True]
+    anomali_df = anomali_df.drop(['EventId', 'EventTemplate', 'Content_Vector', 'Component_Frequency_Encoded'], axis=1)
+
+    return kmeans, anomali_df
+```
+
+ke
