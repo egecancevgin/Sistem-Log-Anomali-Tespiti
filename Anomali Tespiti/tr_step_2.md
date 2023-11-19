@@ -104,6 +104,16 @@ Eğer bir hata mesajı vermediyse bunu test etmek için 9200 port'una gidelim, v
 
 'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com/anomaliler'
 
+Şimdi '5601' portuna girelim ve çıkan ekranda 'Add data' varsa ona basalım. Solda bulunan üç çizgili menü'ye basalım ve çıkan yerden Stack Management'a basalım.
 
+- Stack Management bölümünde 'Index Patterns' kısmı var, buna girelim ve çıkan ekranda 'Create index pattern' tuşuna basalım, ve buraya anomaliler yazıp devam edelim.
 
+Burada sıkıntı yoksa yine üç çizgili sol menüden bu sefer Kibana başlığı altındaki Machine Learning kısmına tıklayalım.
 
+Bizi otomatik olarak attığı 'Data Visualizer' sayfasındaki 'Select an index pattern' başlığındaki 'Select index' butonuna basalım.
+
+Zaten burada 'anomaliler' index'i bulunuyor olmalı, bu index'e basalım.
+
+İşte bu kadar, tüm analizleri yapabiliriz, dashboard'a girmiş olduk.
+
+Bu projenin ilerleyen kısımlarında RNN modelleri kullanımı, Isolation Forest ve zaman serisi modeline eklemeler de vardır, geliştirilmeye açık, ve hatta ayrı bir makine öğrenimi projesi olan Source Overcapacity Forecasting ile de birleştirilip, alerting mekanizmaları ile verimli kaynak ve enerji kullanımı sistemleri oluşturulabilir.
