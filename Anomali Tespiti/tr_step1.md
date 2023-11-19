@@ -135,4 +135,43 @@ def model_egitimi(veri):
     return kmeans, anomali_df
 ```
 
-ke
+Şimdi de değerlendirme fonksiyonunu oluşturalım ve burada demin bahsettiğimiz iki metriği ekrana basalım, bu fonksiyona parametre olarak eğitilmiş modeli ve veriyi verelim:
+``` python
+def degerlendirme(model, veri):
+    '''
+    Makine ögreniminin evaluation asamasini gerceklestirir
+    param model: Egitilmis model
+    '''
+    silh_ortalama = silhouette_score(veri['Content_Vector'].to_list(), veri['Cluster'])
+    print("Silhouette Skoru:", silh_ortalama)
+
+    inertia_degeri = model.inertia_
+    print("Inertia Degeri:", inertia_degeri)
+```
+
+Şimdi de makine öğreniminin final ve en uzun, sürekli değişebilen aşamasının fonksiyonunu oluşturalım ve bunu da anomali.py dosyasına ekleyelim:
+``` python
+def optimizasyon(model, veri):
+    '''
+    Makine ogrenimi modelinin optimizasyonu yapilir
+    '''
+    parametre_grid = {
+        'n_clusters': [8, 10],
+        'init': ['k-means++', 'random'],
+        'max_iter': [300, 500],
+        'tol': [1e-4, 1e-5]
+    }
+
+    # Grid Search algoritması kullanarak hiperparametre optimizasyonu yapalım
+    grid_search = GridSearchCV(
+        estimator=model, param_grid=parametre_grid, cv=3
+    )
+    grid_search.fit(list(veri['Content_Vector']))
+
+    # En iyi parametre kombinasyonunu alıp ekrana basalım ve en iyi modeli dönelim
+    print("En iyi parametreler:", grid_search.best_params_)
+    return grid_search.best_estimator_
+```
+
+
+
