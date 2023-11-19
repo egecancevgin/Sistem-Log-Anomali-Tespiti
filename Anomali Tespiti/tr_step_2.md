@@ -104,7 +104,10 @@ Eğer bir hata mesajı vermediyse bunu test etmek için 9200 port'una gidelim, v
 
 'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com/anomaliler'
 
-Şimdi '5601' portuna girelim ve çıkan ekranda 'Add data' varsa ona basalım. Solda bulunan üç çizgili menü'ye basalım ve çıkan yerden Stack Management'a basalım.
+Şimdi '5601' portuna girelim ve çıkan ekranda 'Add data' varsa ona basalım. 
+![elo_0]()
+
+Solda bulunan üç çizgili menü'ye basalım ve çıkan yerden Stack Management'a basalım.
 
 - Stack Management bölümünde 'Index Patterns' kısmı var, buna girelim ve çıkan ekranda 'Create index pattern' tuşuna basalım, ve buraya anomaliler yazıp devam edelim.
 
