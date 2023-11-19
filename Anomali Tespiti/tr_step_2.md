@@ -89,5 +89,20 @@ services:
       - elasticsearch
 ```
 
+Şimdi ELK'yı ayağa kaldıralım, bu komutu yazdıktan sonra bitmesini bekleyelim:
+``` .sh
+$ docker-compose up -d
+```
+
+Sistem çalışıyorsa verimizi 'curl' komutu ile ELK'ya yollayabiliriz:
+``` .sh
+$ curl -X POST "localhost:9200/_bulk" -H 'Content-Type: application/json' --data-binary @anomaliler.json
+```
+
+Eğer bir hata mesajı vermediyse bunu test etmek için 9200 port'una gidelim, ve link kısmına index anahtarını yazalım, örnek:
+'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com' linkine 'anomaliler' index'ini ekleyelim.
+'https://ip10-244-17-209-user2877-9200.bulutbilisimciler.com/anomaliler'
+
+
 
 
